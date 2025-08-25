@@ -2,17 +2,125 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.ListaProduto"
-             Title="Minhas Compras">
+             Title="🛒 Minhas Compras"
+             BackgroundColor="#F5F6FA">
 
+    <!-- Toolbar -->
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Somar" />
-        <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked" />
+        <ToolbarItem IconImageSource="plus.png"
+                     Text="Adicionar"
+                     Clicked="ToolbarItem_Clicked" />
+
+        <ToolbarItem IconImageSource="dollar.png"
+                     Text="Somar" />
+        
+        <ToolbarItem IconImageSource="trash.png"
+                 Text="Limpar"
+                 Clicked="ToolbarItem_Limpar_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid RowDefinitions="*,Auto" Padding="15">
+
+        <!-- Lista -->
+        <VerticalStackLayout Grid.Row="0">
+
+            <!-- Cabeçalho -->
+            <Frame BackgroundColor="#2D3436"
+                   CornerRadius="12"
+                   Padding="10"
+                   HasShadow="True">
+                <Grid ColumnDefinitions="0.5*,2*,1*,1*,1*">
+                    <Label Text="ID" TextColor="White" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Center"/>
+                    <Label Text="Descrição" TextColor="White" FontAttributes="Bold" Grid.Column="1"/>
+                    <Label Text="Preço" TextColor="White" FontAttributes="Bold" Grid.Column="2" HorizontalTextAlignment="Center"/>
+                    <Label Text="Qnt" TextColor="White" FontAttributes="Bold" Grid.Column="3" HorizontalTextAlignment="Center"/>
+                    <Label Text="Total" TextColor="White" FontAttributes="Bold" Grid.Column="4" HorizontalTextAlignment="Center"/>
+                </Grid>
+            </Frame>
+
+            <!-- Lista de Produtos -->
+            <CollectionView x:Name="lst_produtos"
+                            ItemsLayout="VerticalList"
+                            Margin="0,10,0,0"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,5"
+                               Padding="10"
+                               BackgroundColor="White"
+                               CornerRadius="10"
+                               HasShadow="True">
+                            <Grid ColumnDefinitions="0.5*,2*,1*,1*,1*">
+
+                                <!-- ID -->
+                                <Label Grid.Column="0"
+                                       Text="{Binding Id}"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#636e72"/>
+
+                                <!-- Descrição -->
+                                <Label Grid.Column="1"
+                                       Text="{Binding Descricao}"
+                                       FontSize="16"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#2d3436"/>
+
+                                <!-- Preço -->
+                                <Label Grid.Column="2"
+                                       Text="{Binding Preco, StringFormat='R$ {0:F2}'}"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#0984e3"/>
+
+                                <!-- Quantidade -->
+                                <Label Grid.Column="3"
+                                       Text="{Binding Quantidade}"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#2d3436"/>
+
+                                <!-- Total -->
+                                <Label Grid.Column="4"
+                                       Text="{Binding Total, StringFormat='R$ {0:F2}'}"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#00b894"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+
+        <!-- Rodapé com Total Geral -->
+        <Frame Grid.Row="1"
+               BackgroundColor="#dfe6e9"
+               CornerRadius="12"
+               Padding="15"
+               HasShadow="True"
+               Margin="0,10,0,0">
+            <Grid ColumnDefinitions="2*,1*">
+                <Label Text="Total Geral:"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#2d3436"
+                       VerticalTextAlignment="Center"
+                       Grid.Column="0"/>
+
+                <Label x:Name="lblTotalGeral"
+                       Text="R$ 0,00"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#00b894"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Center"
+                       Grid.Column="1"/>
+            </Grid>
+        </Frame>
+
+    </Grid>
 </ContentPage>

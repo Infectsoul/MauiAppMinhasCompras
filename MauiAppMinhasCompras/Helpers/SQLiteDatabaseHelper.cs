@@ -30,6 +30,17 @@ namespace MauiAppMinhasCompras.Helpers
             return _conn.Table<Produto>().DeleteAsync(i => i.Id == id);
         }
 
+        public async Task<int> DeleteAll()
+        {
+            // Deleta todos os registros
+            int count = await _conn.DeleteAllAsync<Produto>();
+
+            // Reseta o AUTOINCREMENT para que o próximo ID comece de 1
+            await _conn.ExecuteAsync("DELETE FROM SQLITE_SEQUENCE WHERE name='Produto';");
+
+            return count;
+        }
+
         public Task<List<Produto>> GetAll() 
         {
             return _conn.Table<Produto>().ToListAsync();
